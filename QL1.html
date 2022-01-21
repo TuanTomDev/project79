@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <title>Vay lãi</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="vl.css">
+    </head>
+    <body>  
+<div class="bo">
+    		<div class="vl">
+                <center>
+                    <h1>HÓA ĐƠN VAY LÃI</h1>
+                    <a href="QL2.html">Bát họ</a></center>
+    			<button onclick="add()">Thêm mới</button>
+                <br><br>
+                Ghi chú:
+                &emsp;&emsp;
+                <button class="xanh"><i class="fa fa-info" aria-hidden="true"></i></button> Xem thông tin
+                &emsp;&emsp;
+                <button class="vang"><i class="fa fa-money" aria-hidden="true"></i></button> Đóng lãi
+                &emsp;&emsp;
+                <button class="xanhla"><i class="fa fa-check-circle" aria-hidden="true"></i></button> Đóng gốc
+                &emsp;&emsp;
+                <button class="xanhla"><i class="fa fa-clock-o" aria-hidden="true"></i></button> Gia hạn
+                &emsp;&emsp;
+                <button class="orange"><i class="fa fa-times" aria-hidden="true"></i></button> Đóng HĐ
+                &emsp;&emsp;
+                <button class="do"><i class="fa fa-times" aria-hidden="true"></i></button> Xóa hóa đơn
+    			<br><br>
+                <span>Tìm kiếm </span><input type="text" id="search" oninput="Load()">
+                &emsp;&emsp;
+                <span>Xem các hóa đơn cần xử lý: </span>    
+                <input type="checkbox" id="xuly" onchange="Load()" onclick="onlyOne(this)" name="check">
+                &emsp;&emsp;
+                <span>Xem các hóa đơn hoàn thành: </span>
+                <input type="checkbox" id="hoanthanh" onchange="Load()" onclick="onlyOne(this)" name="check">
+                <br><br>
+    			<table id="data">
+    				<tr>
+    					<td>Stt</td>
+    					<td>Tên</td>
+    					<td>Tài sản</td>
+    					<td>VNĐ</td>
+    					<td>Ngày Vay</td>
+    					<td>Lãi đã đóng</td>
+    					<td>Lãi đến hôm nay</td>
+    					<td>Ngày phải đóng lãi</td>
+    					<td>Tình trạng</td>
+                        <td>Chức năng</td>
+    				</tr>
+    			</table>
+    		</div>
+    		<form class="addvl" id="addvl" onsubmit="addHoaDonVayLai()">
+    			<div class="form">
+    			<p class="out" onclick="out()"><i class="fa fa-times" aria-hidden="true"></i></p>
+    			<center>
+    			<div>
+    				<h3><i class="fa fa-user" aria-hidden="true"></i> Thông tin khách hàng</h3>
+    				<span>Tên khách hàng: </span>
+    				<input type="text" id="ten" placeholder="Nhập tên khách hàng" required="required">
+    				&emsp;&emsp;
+    				<span>Số cmnd/Hộ chiếu: </span>
+    				<input type="text" id="cmnd" placeholder="Nhập số cmnd/hộ chiếu">
+    				<br><br>
+    				<span>Địa chỉ: </span>
+    				<textarea name="" id="diachi" cols="30" rows="2" placeholder="Nhập địa chỉ"></textarea>
+    				&emsp;&emsp;
+    				<span>Số điện thoại: </span>
+    				<input type="text" id="sdt" placeholder="Nhập số điện thoại">
+    				<br><br>
+    			</div>
+    			<div>
+    				<h3><i class="fa fa-money" aria-hidden="true"></i> Thông tin khoản vay</h3>
+    				<span>Thế chấp: </span>
+    				<input type="text" id="thechap" value="Không">
+    				<br><br>
+    				<span>Tổng số tiền vay (VNĐ): </span>
+    				<input type="text" id="tien" placeholder="Nhập số tiền vay" required="required" oninput="cham(this.value)">
+    				<br><br>
+    				<span>Hình thức lãi: </span>
+    				<Select id="hinhthuc">
+    					<option value="1">Lãi ngày (k/triệu)</option>
+    				</Select>
+    				&emsp;&emsp;
+    				<input type="checkbox" id="thutruoc" onclick="check()"> <span>Thu lãi trước</span>
+    				<br><br>
+    				<span>Số ngày vay: </span>
+    				<input type="number" id="songay" placeholder="Nhập số ngày vay" required="required">
+    				<br><br>
+    				<span>Kỳ lãi (ngày): </span>
+    				<input type="number" id="ky" placeholder="Số ngày đóng lãi 1 lần" required="required">
+    				<br><br>
+    				<span>Lãi (k/triệu): </span>
+    				<input type="number" id="lai" placeholder="Nhập số lãi" required="required">
+    				<br><br>
+    				<span>Ngày vay: </span>
+    				<input type="date" id="ngay" required="required">
+    				<br><br>
+    				<span>Ghi chú: </span>
+    				<textarea name="" id="note" cols="30" rows="2" placeholder="Ghi chú thêm"></textarea>
+    				<br><br>
+    				<span>Người thu tiền: </span>
+    				<input type="text" id="nhanvien" placeholder="Nhân viên thu tiền">
+    				<br><br>
+    			</div>
+    			<input type="submit" value="Thêm"></center>
+    			</div>
+    		</form>
+            <div id="info">
+                <div class="info_main">
+                <p class="out" onclick="outinfo()"><i class="fa fa-times" aria-hidden="true"></i></p>
+                <center >
+                <div>
+                    <h3><i class="fa fa-user" aria-hidden="true"></i> Thông tin khách hàng</h3>
+                    Tên khách hàng: <input id="if1"></input>
+                    &emsp;&emsp;
+                    Số cmnd/Hộ chiếu: <input id="if2"></input>
+                    <br><br>
+                    Địa chỉ: <input id="if3"></input>
+                    &emsp;&emsp;
+                    Số điện thoại: <input id="if4"></input>
+                    <br><br>
+
+                </div>
+                <div>
+                    <h3><i class="fa fa-money" aria-hidden="true"></i> Thông tin khoản vay</h3>
+                    Thế chấp: <input id="if5"></input>
+                    <br><br>
+                    Tổng số tiền vay (VNĐ):<input id="if6"> </input>
+                    <br><br>
+                    Hình thức lãi: <input id="if13"></input>
+                    &emsp;&emsp;
+                    Thu trước: <input id="if14"></input>
+                    <br><br>
+                    Số ngày vay: <input id="if7"></input>
+                    <br><br>
+                    Kỳ lãi (ngày): <input id="if8"></input>
+                    <br><br>
+                    Lãi (k/triệu): <input id="if9"></input>
+                    <br><br>
+                    Ngày vay: <input id="if10"></input>
+                    <br><br>
+                    Ghi chú: <input id="if11"></input>
+                    <br><br>
+                    Người thu tiền: <input id="if12"></input>
+                    <br><br>
+                    <button id="Update">Sửa</button>
+                </div>
+                </center>
+                </div>
+            </div>
+</div>
+        <script type="text/javascript" src="vl.js"></script>
+    </body>
+</html>

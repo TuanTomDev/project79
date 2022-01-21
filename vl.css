@@ -1,0 +1,105 @@
+.bo{
+	margin: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 1200px;
+	background-color: #fff;
+	min-height: 1000px;
+	box-shadow: 0px 0px 10px 3px grey;
+}
+body{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	background-color: #cacaca;
+}
+a{
+	background-color: darkgray;
+	padding: 5px;
+	color: white;
+	font-size: 20px;
+	text-decoration: none;
+	transition: 0.2s;
+	border:solid 1px black ;
+	border-radius: 5px;
+}
+A:hover{
+	background-color: lightgray;
+	color: black;
+}
+.vl{
+	width: 1000px;
+	margin: auto;
+	padding-top: 10px;
+}
+.addvl{
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+	background-color: #00000099;
+	transition: 0.3s;
+}
+.addvl .form{
+	width: 1000px;
+	background-color: whitesmoke;
+	margin: auto;
+	margin-top: 50px;
+}
+center{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+.out{
+	margin: 5px;
+	display: flex;
+	float: right;
+	cursor: pointer;
+}
+.hien{
+	opacity: 1 !important;
+	visibility: visible !important;
+}
+table{
+	width: 1000px;
+}
+table,td,th{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+table button{
+	margin: 3px;
+	width: 25px;
+	height: 25px;
+	font-size: 10px;
+}
+.xanh{background-color: lightblue;}
+.vang{background-color: lightyellow;}
+.orange{background-color: orange;}
+.do{background-color: red;}
+.xanhla{background-color: green;}
+#info{
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+	background-color: #00000099;
+	transition: 0.3s;
+}
+#info .info_main{
+	width: 1000px;
+	background-color: whitesmoke;
+	margin: auto;
+	margin-top: 50px;
+}
+.chudo{
+	color: red;
+}
