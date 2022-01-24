@@ -1,5 +1,5 @@
 const {Temporal} = temporal;
-const dt = temporal.Now.plainDateISO().toString();
+const dt = Temporal.Now.plainDateISO().toString();
 
 function onlyOne(checkbox) {
     var checkboxes = document.getElementsByName('check')
@@ -199,7 +199,6 @@ con=snapshot.numChildren();
     	    	ngayphaidong1.setDate(ngayphaidong1.getDate()-childData.ky+1);
     	    }
     	    ngayphaidong1=ngayphaidong1.getFullYear()+"-"+(ngayphaidong1.getMonth()+1)+"-"+ngayphaidong1.getDate();
-    	    console.log(daysDifference(today,checkxl1));
     	if(daysDifference(today,checkxl1)==0)
     	{	ngayphaidong.innerHTML="Hôm nay"
     	if(childData.thutruoc=="c") {format=parseInt(childData.lai*childData.ky*1000*(childData.tien/1000000));
