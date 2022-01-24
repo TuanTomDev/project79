@@ -1,3 +1,5 @@
+const {Temporal} = temporal;
+const dt = temporal.Now.plainDateISO().toString();
 
 function onlyOne(checkbox) {
     var checkboxes = document.getElementsByName('check')
@@ -25,8 +27,7 @@ function cham(so){
 		document.getElementById("tien").value=format;
 	}
 }
-var homnay =new Date();
-var today=new Date(homnay.getFullYear(),homnay.getMonth(),homnay.getDate());
+var today=new Date(dt);
 
 var id=today.getTime();
 var addvl=document.getElementById("addvl");
