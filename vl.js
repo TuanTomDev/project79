@@ -193,17 +193,19 @@ con=snapshot.numChildren();
     		laihn.innerHTML=format.toLocaleString()+" ("+tinhlai+"ngày)";
     	}
     	var ngayphaidong=document.createElement("td");
-    		today=today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
     	    var ngayphaidong1=new Date(childData.ngayphaidong);
     	    if(childData.thutruoc=="c"){
     	    	ngayphaidong1.setDate(ngayphaidong1.getDate()-childData.ky+1);
     	    }
     	    ngayphaidong1=ngayphaidong1.getFullYear()+"-"+(ngayphaidong1.getMonth()+1)+"-"+ngayphaidong1.getDate();
-    	if(ngayphaidong1==today)
-    	{	ngayphaidong.innerHTML="Hôm nay" 
+    	    console.log(daysDifference(today,checkxl1));
+    	if(daysDifference(today,checkxl1)==0)
+    	{	ngayphaidong.innerHTML="Hôm nay"
     	if(childData.thutruoc=="c") {format=parseInt(childData.lai*childData.ky*1000*(childData.tien/1000000));
     		laihn.innerHTML=format.toLocaleString()+" ("+childData.ky+"ngày)";}
     	}
+    	else if(daysDifference(today,checkxl1)==1)
+    	{	ngayphaidong.innerHTML="Ngày mai"}
     	else {ngayphaidong1=ngayphaidong1.split("-");ngayphaidong.innerHTML=ngayphaidong1[2]+"/"+ngayphaidong1[1]+"/"+ngayphaidong1[0];}
     	if(childData.hoanthanh==1) ngayphaidong.innerHTML="Hoàn thành";
     	var tinhtrang=document.createElement("td");
@@ -214,7 +216,7 @@ con=snapshot.numChildren();
     	else if(ngayphaidong.innerHTML=="Hôm nay") {tinhtrang.innerHTML="HN đóng lãi";tinhtrang.classList.add("xanh") }	
     	else if(childData.hoanthanh==1)
     	{tinhtrang.innerHTML="Hoàn thành";tinhtrang.classList.add("xanhla");}
-    	else if(today - ngaytinhtrang >= 1) {tinhtrang.innerHTML="Quá hạn";tinhtrang.classList.add("do") }
+    	else if(daysDifference(today,checkxl1)<0) {tinhtrang.innerHTML="Quá hạn";tinhtrang.classList.add("do") }
     	else {tinhtrang.innerHTML="Đang vay";tinhtrang.classList.add("vang") }
     	tongdenhn+=parseInt(laihn.innerHTML.split('.').join(''));
     	var chucnang=document.createElement("td");
