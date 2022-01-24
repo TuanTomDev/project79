@@ -1,5 +1,7 @@
 const {Temporal} = temporal;
-const dt = Temporal.Now.plainDateISO().toString();
+var dateString = Temporal.Now.plainDateISO().toString();
+
+const instant = Temporal.Instant.from(dateString.replace(" ", "T") + "Z");
 
 function onlyOne(checkbox) {
     var checkboxes = document.getElementsByName('check')
@@ -27,7 +29,7 @@ function cham(so){
 		document.getElementById("tien").value=format;
 	}
 }
-var today=new Date(dt);
+var today= new Date(instant.epochMilliseconds);
 
 var id=today.getTime();
 var addvl=document.getElementById("addvl");
