@@ -25,8 +25,8 @@ function cham(so){
 		document.getElementById("tien").value=format;
 	}
 }
-
-var today=new Date();
+var homnay =new Date();
+var today=new Date(homnay.getFullYear(),homnay.getMonth(),homnay.getDate());
 
 var id=today.getTime();
 var addvl=document.getElementById("addvl");

@@ -32,7 +32,8 @@ var info=document.getElementById("info");
 function outinfo(){
 	info.classList.remove("hien");
 }
-var today=new Date();
+var homnay =new Date();
+var today=new Date(homnay.getFullYear(),homnay.getMonth(),homnay.getDate());
 var mai=new Date();mai.setDate(mai.getDate()+1);
 var id=today.getTime();
 function add(){

@@ -18,6 +18,7 @@
                 <button onclick="add()">Thêm mới</button>
                 <br><br>
                 Ghi chú:
+                <br><br>
                 &emsp;&emsp;
                 <button class="xanh"><i class="fa fa-info" aria-hidden="true"></i></button> Xem thông tin hóa đơn
                 &emsp;&emsp;
@@ -30,6 +31,7 @@
                 <button class="do"><i class="fa fa-times" aria-hidden="true"></i></button> Xóa hóa đơn
                 <br><br>
                 <span>Tìm kiếm </span><input type="text" id="search" oninput="Load()">
+                <br><br>
                 &emsp;&emsp;
                 <span>Xem các hóa đơn cần xử lý: </span>    
                 <input type="checkbox" id="xuly" onchange="Load()" name="check" onclick="onlyOne(this)">
@@ -59,6 +61,8 @@
                 <center>
                 <div>
                     <h3><i class="fa fa-user" aria-hidden="true"></i> Thông tin khách hàng</h3>
+                    <span>Khách hàng cũ: </span><input type="checkbox">
+                    <br><br>
                     <span>Tên khách hàng: </span>
                     <input type="text" id="ten" placeholder="Nhập tên khách hàng" required="required">
                     &emsp;&emsp;
