@@ -12,6 +12,7 @@ body{
 	margin: 0;
 	padding: 0;
 	background-color: #cacaca;
+	font-family: segoe ui	;
 }
 a{
 	background-color: darkgray;
@@ -71,6 +72,9 @@ table,td,th{
 	border: 1px solid black;
 	border-collapse: collapse;
 }
+td{
+	padding: 10px;
+}
 table button{
 	margin: 3px;
 	width: 25px;
@@ -81,7 +85,7 @@ table button{
 .vang{background-color: lightyellow;}
 .orange{background-color: orange;}
 .do{background-color: red;}
-.xanhla{background-color: green;}
+.xanhla{background-color: lightgreen;}
 #info{
 	position: absolute;
 	z-index: 1;
