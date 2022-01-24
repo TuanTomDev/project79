@@ -1,10 +1,3 @@
-const {Temporal} = temporal;
-const dt = Temporal.Now.plainDateISO().toString();
-
-if(sessionStorage.getItem("dangnhap")==null){
-	window.location.href = "index.html";
-}
-
 function onlyOne(checkbox) {
     var checkboxes = document.getElementsByName('check')
     checkboxes.forEach((item) => {
@@ -35,7 +28,7 @@ var info=document.getElementById("info");
 function outinfo(){
 	info.classList.remove("hien");
 }
-var today=new Date(dt);
+var today=new Date();
 var mai=new Date();mai.setDate(mai.getDate()+1);
 var id=today.getTime();
 function add(){
@@ -169,16 +162,16 @@ data.on('value', (snapshot) => {
     	var laidadong=document.createElement("td");
     	format = parseInt(childData.laidadong);
     	tonglaidadong+=format;
-    	laidadong.innerHTML=format.toLocaleString()+" VNĐ"+" ("+(format/childData.batho*(childData.songay/childData.songaydong))+"Kỳ)";
+    	laidadong.innerHTML=format.toLocaleString()+" VNĐ"+" ("+((format/childData.batho*(childData.songay/childData.songaydong)).toFixed())+" Kỳ)";
 //*
     	var lai1ngay=document.createElement("td");
     	format =parseInt(childData.batho/childData.songay);
     	tonglai1ngay+=format;
-    	lai1ngay.innerHTML=format.toLocaleString()+"VNĐ";
+    	lai1ngay.innerHTML=format.toLocaleString()+" VNĐ";
     	var conphaidong=document.createElement("td");
     	format=parseInt(childData.batho-childData.laidadong);
     	tongconlai+=format;
-    	conphaidong.innerHTML=format.toLocaleString()+" VNĐ"+"  ("+(format/childData.batho*(childData.songay/childData.songaydong))+"Kỳ)";
+    	conphaidong.innerHTML=format.toLocaleString()+" VNĐ"+"  ("+((format/childData.batho*(childData.songay/childData.songaydong)).toFixed())+" Kỳ)";
     	var tinhtrang=document.createElement("td");
     	if(checkhn.getDate()==today.getDate() && checkhn.getMonth()==today.getMonth() && checkhn.getFullYear()==today.getFullYear())
     		{tinhtrang.innerHTML="HN đóng họ";tinhtrang.classList.add("xanh") }
@@ -272,11 +265,17 @@ data.on('value', (snapshot) => {
     	    nutgiahan.innerHTML="<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>";
     	    nutgiahan.classList.add("xanhla");
     	    nutgiahan.addEventListener("click", function() {
-    	    var no=childData.batho-childData.laidadong;
-    	    var daoho=childData.duakhach-no;
-    	    var r =confirm("Hóa đơn này còn nợ "+no.toLocaleString()+" VND.\nSau khi đảo họ tiền đưa khách sẽ là "+daoho.toLocaleString()+"VNĐ");
+    	    var no=(childData.batho-childData.laidadong);
+    	    var daoho=(childData.duakhach-no).toLocaleString().split(",");
+    	    no=no.toLocaleString().split(",");
+    		var ngayphaidongnew=new Date();
+			ngayphaidongnew.setDate(ngayphaidongnew.getDate()+(parseInt(childData.songaydong)-1));
+			ngayphaidongnew=ngayphaidongnew.getFullYear()+"-"+(ngayphaidongnew.getMonth()+1)+"-"+ngayphaidongnew.getDate();
+    	    var r =confirm("Hóa đơn này còn nợ "+no[0]+" VND.\nSau khi đảo họ tiền đưa khách sẽ là "+daoho[0]+" VNĐ");
 	    		if(r==true){
-	    		update.child("songay").set(parseInt(childData.songay)+parseInt(r));   		
+	    		update.child("laidadong").set(0);
+	    		update.child("ngayphaidong").set(ngayphaidongnew);
+	    		update.child("ngay").set(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate());   		
 	    		Load();
 	    	}
 			});

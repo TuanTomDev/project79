@@ -1,8 +1,3 @@
-const {Temporal} = temporal;
-var dateString = Temporal.Now.plainDateISO().toString();
-
-const instant = Temporal.Instant.from(dateString.replace(" ", "T") + "Z");
-
 function onlyOne(checkbox) {
     var checkboxes = document.getElementsByName('check')
     checkboxes.forEach((item) => {
@@ -29,7 +24,7 @@ function cham(so){
 		document.getElementById("tien").value=format;
 	}
 }
-var today= new Date(instant.epochMilliseconds);
+var today=new Date();
 
 var id=today.getTime();
 var addvl=document.getElementById("addvl");
@@ -68,7 +63,9 @@ function addHoaDonVayLai() {
 	var nhanvien=document.getElementById("nhanvien").value;
 	var cong=parseInt(ky);
 	var ngayphaidong = new Date(ngay);
+	if(thutruoc=="k"){
 	ngayphaidong.setDate(ngayphaidong.getDate()+(cong-1));
+	};
 	ngayphaidong=ngayphaidong.getFullYear()+"-"+(ngayphaidong.getMonth()+1)+"-"+ngayphaidong.getDate();
   	vaylai.set({
   			ten:ten,
@@ -86,6 +83,7 @@ function addHoaDonVayLai() {
 	    	note:note,
 	    	nhanvien:nhanvien,
 	    	laidadong:0,
+	    	ngaydadong:0,
 	    	ngayphaidong:ngayphaidong,
 	    	hoanthanh:0
 
@@ -153,9 +151,6 @@ con=snapshot.numChildren();
     
     var checkht=0,checkxl=0;
     var checkxl1= new Date(childData.ngayphaidong);
-    if(childData.thutruoc=="c"){
-    	checkxl1.setDate(checkxl1.getDate()-childData.ky+1);
-    	}
     if(document.getElementById("hoanthanh").checked==true) checkht=1;
     if(document.getElementById("xuly").checked==true){
     	checkxl=1;
@@ -182,30 +177,24 @@ con=snapshot.numChildren();
     	var laidadong=document.createElement("td");
     	var format=parseInt(childData.laidadong);
     	tongdadong+=format;
-    	laidadong.innerHTML=format.toLocaleString()+" ("+childData.laidadong/(childData.lai*1000*(childData.tien/1000000))+" ngày)";
+    	laidadong.innerHTML=format.toLocaleString()+" ("+childData.ngaydadong+" ngày)";
 //* 
     	var laihn=document.createElement("td");
     	ngay=new Date(childData.ngayphaidong);
     	ngay.setDate(ngay.getDate()-parseInt(childData.ky));
     	var tinhlai= new Date(today-1);
     	tinhlai=daysDifference(ngay,tinhlai)
-    	if(childData.laidadong/(childData.lai*1000*(childData.tien/1000000))==childData.songay || childData.hoanthanh==1) laihn.innerHTML="Hoàn thành";
+    	if(childData.ngaydadong-childData.songay==0 || childData.hoanthanh==1){laihn.innerHTML="Hoàn thành"}
     	else if(today<ngay) laihn.innerHTML="0 (0 ngày)";
     	else{
     		format=parseInt(childData.lai*tinhlai*1000*(childData.tien/1000000));
     		laihn.innerHTML=format.toLocaleString()+" ("+tinhlai+"ngày)";
     	}
     	var ngayphaidong=document.createElement("td");
-    	    var ngayphaidong1=new Date(childData.ngayphaidong);
-    	    if(childData.thutruoc=="c"){
-    	    	ngayphaidong1.setDate(ngayphaidong1.getDate()-childData.ky+1);
-    	    }
-    	    ngayphaidong1=ngayphaidong1.getFullYear()+"-"+(ngayphaidong1.getMonth()+1)+"-"+ngayphaidong1.getDate();
+    	var ngayphaidong1=new Date(childData.ngayphaidong);
+    	ngayphaidong1=ngayphaidong1.getFullYear()+"-"+(ngayphaidong1.getMonth()+1)+"-"+ngayphaidong1.getDate();
     	if(daysDifference(today,checkxl1)==0)
-    	{	ngayphaidong.innerHTML="Hôm nay"
-    	if(childData.thutruoc=="c") {format=parseInt(childData.lai*childData.ky*1000*(childData.tien/1000000));
-    		laihn.innerHTML=format.toLocaleString()+" ("+childData.ky+"ngày)";}
-    	}
+    	{	ngayphaidong.innerHTML="Hôm nay"}
     	else if(daysDifference(today,checkxl1)==1)
     	{	ngayphaidong.innerHTML="Ngày mai"}
     	else {ngayphaidong1=ngayphaidong1.split("-");ngayphaidong.innerHTML=ngayphaidong1[2]+"/"+ngayphaidong1[1]+"/"+ngayphaidong1[0];}
@@ -213,13 +202,15 @@ con=snapshot.numChildren();
     	var tinhtrang=document.createElement("td");
     	ngaytinhtrang=new Date(childData.ngayphaidong);
     	today=new Date();
-    	if(childData.laidadong/(childData.lai*1000*(childData.tien/1000000))==childData.songay && ngayphaidong.innerHTML=="Hôm nay")
+    	if(childData.ngaydadong==childData.songay && ngayphaidong.innerHTML=="Hôm nay")
     	{tinhtrang.innerHTML="Hôm nay đóng gốc";tinhtrang.classList.add("xanh");}
     	else if(ngayphaidong.innerHTML=="Hôm nay") {tinhtrang.innerHTML="HN đóng lãi";tinhtrang.classList.add("xanh") }	
     	else if(childData.hoanthanh==1)
     	{tinhtrang.innerHTML="Hoàn thành";tinhtrang.classList.add("xanhla");}
     	else if(daysDifference(today,checkxl1)<0) {tinhtrang.innerHTML="Quá hạn";tinhtrang.classList.add("do") }
+
     	else {tinhtrang.innerHTML="Đang vay";tinhtrang.classList.add("vang") }
+    	if(laihn.innerHTML!="Hoàn thành")
     	tongdenhn+=parseInt(laihn.innerHTML.split('.').join(''));
     	var chucnang=document.createElement("td");
 
@@ -284,19 +275,20 @@ con=snapshot.numChildren();
 	    	  nutdonglai.addEventListener("click", function() {
 		    	var donglai=childData.laidadong+(childData.ky*childData.lai*1000*(childData.tien/1000000));
 		    	var ngaynew= new Date(childData.ngayphaidong);
-		    	console.log(ngayphaidong1);
 		    	ngaynew.setDate(ngaynew.getDate()+parseInt(childData.ky));
 		    	ngaynew=ngaynew.getFullYear()+"-"+(ngaynew.getMonth()+1)+"-"+ngaynew.getDate();
 		    	var r =confirm("Bạn có chắc chắn muốn đóng lãi cho hóa đơn này ?");
 		    	if(r==true){
 		    		if(childData.thutruoc=="k" && childData.laidadong/(childData.lai*1000*(childData.tien/1000000))==(childData.songay-childData.ky))
 		    		{
-		    			update.child("laidadong").set(donglai);    		
+		    			update.child("laidadong").set(donglai); 
+		    			update.child("ngaydadong").set(parseInt(childData.ngaydadong)+parseInt(childData.ky)); 		
 		    			Load();
 		    		}
 		    		else{
 			    		update.child("ngayphaidong").set(ngaynew);
-			    		update.child("laidadong").set(donglai);    		
+			    		update.child("laidadong").set(donglai);
+			    		update.child("ngaydadong").set(parseInt(childData.ngaydadong)+parseInt(childData.ky));	
 			    		Load();		    			
 		    		}
 		    	}
@@ -308,8 +300,7 @@ con=snapshot.numChildren();
     	    nutdonggoc.addEventListener("click", function() {
     	    var r =confirm("Bạn có chắc chắn muốn đóng gốc và hoàn thành hóa đơn này ?");
 	    		if(r==true){
-    	    update.child("hoanthanh").set(1);
-
+    	   		update.child("hoanthanh").set(1);
 	    		Load();
 	    	}
 			});
@@ -320,6 +311,18 @@ con=snapshot.numChildren();
     	    var r =prompt("Hóa đơn này có kỳ lãi là "+childData.ky+" ngày.\nNhập số ngày muốn gia hạn thêm cho hóa đơn này",childData.ky);
 	    	if(r!=null){
 	    		update.child("songay").set(parseInt(childData.songay)+parseInt(r));   		
+	    		Load();
+	    	}
+			});
+
+    	    var dongbotgoc=document.createElement("Button");
+    	    dongbotgoc.innerHTML="<i class=\"fa fa-credit-card\" aria-hidden=\"true\"></i>";
+    	    dongbotgoc.classList.add("nau");
+    	    dongbotgoc.addEventListener("click", function() {
+    	    var r =prompt("Hóa đơn này có gốc là "+parseInt(childData.tien).toLocaleString()+" VNĐ.\nNhập số tiền muốn đóng bớt cho hóa đơn này:",);
+    	    r.oninput="cham(this.value)";
+	    	if(r!=null){
+	    		update.child("tien").set(parseInt(childData.tien)-r);   		
 	    		Load();
 	    	}
 			});
@@ -356,10 +359,11 @@ con=snapshot.numChildren();
     	if(document.getElementById("hoanthanh").checked!=true){
     	chucnang.appendChild(nutxem);
     	chucnang.appendChild(nutdonglai);
-    	chucnang.appendChild(nutgiahan);
-    	chucnang.appendChild(nutdonghd);
     	if(laihn.innerHTML=="Hoàn thành")
     		{chucnang.appendChild(nutdonggoc);nutdonglai.disabled=true;}
+    	chucnang.appendChild(nutgiahan);
+    	chucnang.appendChild(dongbotgoc);
+    	chucnang.appendChild(nutdonghd);
     	}
     	chucnang.appendChild(nutxoa);
     	hang.appendChild(chucnang);
