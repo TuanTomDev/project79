@@ -13,7 +13,7 @@ function daysDifference(d0, d1) {
   return Math.round(diff/8.64e7);
 }
 function cham(so){
-	let format=so.split('.').join('');
+	let format=so.split('.').join('').split(',').join('');
 	if(isNaN(format)){
 		alert("Vui lòng nhập số tiền !");
 		document.getElementById("tien").value="";
@@ -53,7 +53,7 @@ function addHoaDonVayLai() {
 	var sdt=document.getElementById("sdt").value;
 	var diachi=document.getElementById("diachi").value;
 	var thechap=document.getElementById("thechap").value;
-	var tien=document.getElementById("tien").value.split('.').join('');
+	var tien=document.getElementById("tien").value.split('.').join('').split(',').join('');
 	var hinhthuc=document.getElementById("hinhthuc").value;
 	var songay=document.getElementById("songay").value;
 	var ky=document.getElementById("ky").value;
@@ -211,7 +211,7 @@ con=snapshot.numChildren();
 
     	else {tinhtrang.innerHTML="Đang vay";tinhtrang.classList.add("vang") }
     	if(laihn.innerHTML!="Hoàn thành")
-    	tongdenhn+=parseInt(laihn.innerHTML.split('.').join(''));
+    	tongdenhn+=parseInt(laihn.innerHTML.split('.').join('').split(',').join(''));
     	var chucnang=document.createElement("td");
 
     	    var nutxem=document.createElement("Button");

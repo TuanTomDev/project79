@@ -10,7 +10,7 @@ function onlyOne(checkbox) {
   return Math.round(diff/8.64e7);	
   }
 function cham(so,parent){
-	let format=so.split('.').join('');
+	let format=so.split('.').join('').split(',').join('');
 	if(isNaN(format)){
 		alert("Vui lòng nhập số tiền !");
 		parent.value="";
@@ -76,8 +76,8 @@ function addHoaDonBatHo(){
 	var cmnd=document.getElementById("cmnd").value;
 	var sdt=document.getElementById("sdt").value;
 	var diachi=document.getElementById("diachi").value;
-	var batho=document.getElementById("batho").value.split('.').join('');
-	var duakhach=document.getElementById("duakhach").value.split('.').join('');
+	var batho=document.getElementById("batho").value.split('.').join('').split(',').join('');
+	var duakhach=document.getElementById("duakhach").value.split('.').join('').split(',').join('');
 	var hinhthuc=document.getElementById("hinhthuc").value;
 	var songay=document.getElementById("songay").value;
 	var songaydong=document.getElementById("songaydong").value;
@@ -223,8 +223,8 @@ data.on('value', (snapshot) => {
 							datainfo.child("cmnd").set(document.getElementById("if2").value);
 							datainfo.child("diachi").set(document.getElementById("if3").value);
 							datainfo.child("sdt").set(document.getElementById("if4").value);
-							datainfo.child("batho").set(document.getElementById("if5").value.split('.').join(''));
-							datainfo.child("duakhach").set(document.getElementById("if6").value.split('.').join(''));
+							datainfo.child("batho").set(document.getElementById("if5").value.split('.').join('').split(',').join(''));
+							datainfo.child("duakhach").set(document.getElementById("if6").value.split('.').join('').split(',').join(''));
 							datainfo.child("hinhthuc").set(document.getElementById("if7").value);
 							datainfo.child("songay").set(document.getElementById("if8").value);
 							datainfo.child("songaydong").set(document.getElementById("if9").value);
