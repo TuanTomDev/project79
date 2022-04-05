@@ -266,12 +266,12 @@ data.on('value', (snapshot) => {
     	    nutgiahan.classList.add("xanhla");
     	    nutgiahan.addEventListener("click", function() {
     	    var no=(childData.batho-childData.laidadong);
-    	    var daoho=(childData.duakhach-no).toLocaleString().split(",");
-    	    no=no.toLocaleString().split(",");
+    	    var daoho=(childData.duakhach-no);
+    	    no=no.toLocaleString();
     		var ngayphaidongnew=new Date();
 			ngayphaidongnew.setDate(ngayphaidongnew.getDate()+(parseInt(childData.songaydong)-1));
 			ngayphaidongnew=ngayphaidongnew.getFullYear()+"-"+(ngayphaidongnew.getMonth()+1)+"-"+ngayphaidongnew.getDate();
-    	    var r =confirm("Hóa đơn này còn nợ "+no[0]+" VND.\nSau khi đảo họ tiền đưa khách sẽ là "+daoho[0]+" VNĐ");
+    	    var r =confirm("Hóa đơn này còn nợ "+no+" VND.\nSau khi đảo họ tiền đưa khách sẽ là "+daoho.toLocaleString()+" VNĐ");
 	    		if(r==true){
 	    		update.child("laidadong").set(0);
 	    		update.child("ngayphaidong").set(ngayphaidongnew);
