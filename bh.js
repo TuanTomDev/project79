@@ -248,7 +248,7 @@ data.on('value', (snapshot) => {
 	    	ngaynew.setDate(ngaynew.getDate()+parseInt(childData.songaydong));
 	    	var checkdonglai=0;
 	    	ngaynew=ngaynew.getFullYear()+"-"+(ngaynew.getMonth()+1)+"-"+ngaynew.getDate();  	
-	    	var r =confirm("Bạn có chắc chắn muốn đóng họ cho hóa đơn này ?");
+	    	var r =confirm("Bạn có chắc chắn muốn ĐÓNG 1 KỲ ("+parseInt(childData.batho/childData.songay*childData.songaydong).toLocaleString()+" VNĐ) cho "+childData.ten.toUpperCase()+" không ?");
 	    	if(r==true){
     	   	update.child("laidadong").set(donglai);
 	    		update.child("ngayphaidong").set(ngaynew);
@@ -271,7 +271,7 @@ data.on('value', (snapshot) => {
     		var ngayphaidongnew=new Date();
 			ngayphaidongnew.setDate(ngayphaidongnew.getDate()+(parseInt(childData.songaydong)-1));
 			ngayphaidongnew=ngayphaidongnew.getFullYear()+"-"+(ngayphaidongnew.getMonth()+1)+"-"+ngayphaidongnew.getDate();
-    	    var r =confirm("Hóa đơn này còn nợ "+no+" VND.\nSau khi đảo họ tiền đưa khách sẽ là "+daoho.toLocaleString()+" VNĐ");
+    	    var r =confirm(""+childData.ten.toUpperCase()+" còn nợ "+no+" VND.\nSau khi đảo họ tiền đưa cho "+childData.ten.toUpperCase()+" sẽ là "+daoho.toLocaleString()+" VNĐ");
 	    		if(r==true){
 	    		update.child("laidadong").set(0);
 	    		update.child("ngayphaidong").set(ngayphaidongnew);
@@ -285,7 +285,7 @@ data.on('value', (snapshot) => {
     	    nutdonghd.classList.add("orange");
     	    var batho=parseInt(childData.batho);
     	    nutdonghd.addEventListener("click", function() {
-    	    var r =confirm("Bạn có chắc chắn muốn đóng hóa đơn này ?");
+    	    var r =confirm("Bạn có chắc chắn muốn ĐÓNG HÓA ĐƠN cho "+childData.ten.toUpperCase()+" ?");
     	    if(r==true) {
     	    	update.child("hoanthanh").set(1);
     	    	update.child("laidadong").set(batho);
@@ -296,7 +296,7 @@ data.on('value', (snapshot) => {
     	    nutxoa.innerHTML="<i class=\"fa fa-times\" aria-hidden=\"true\"></i>";	
     	    nutxoa.classList.add("do");
     	    nutxoa.addEventListener("click", function() {
-    	    var r =confirm("Bạn có chắc chắn muốn xóa khoản vay này ?");
+    	    var r =confirm("Bạn có chắc chắn muốn XÓA KHOẢN VAY của "+childData.ten.toUpperCase()+" ?");
     	    if(r==true) {firebase.child("bh").child(childSnapshot.key()).remove();
     	    Load();}
 			});

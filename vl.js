@@ -277,7 +277,7 @@ con=snapshot.numChildren();
 		    	var ngaynew= new Date(childData.ngayphaidong);
 		    	ngaynew.setDate(ngaynew.getDate()+parseInt(childData.ky));
 		    	ngaynew=ngaynew.getFullYear()+"-"+(ngaynew.getMonth()+1)+"-"+ngaynew.getDate();
-		    	var r =confirm("Bạn có chắc chắn muốn đóng lãi cho hóa đơn này ?");
+		    	var r =confirm("Bạn có chắc chắn muốn ĐÓNG LÃI "+childData.ky+" ngày ("+parseInt(childData.ky*childData.lai*1000*(childData.tien/1000000)).toLocaleString()+" VNĐ) cho "+childData.ten.toUpperCase()+" ?");
 		    	if(r==true){
 		    		if(childData.thutruoc=="k" && childData.laidadong/(childData.lai*1000*(childData.tien/1000000))==(childData.songay-childData.ky))
 		    		{
@@ -332,7 +332,7 @@ con=snapshot.numChildren();
     	    nutdonghd.classList.add("orange");
     	    var tonglai=childData.lai*1000*(childData.tien/1000000)*childData.songay;
     	    nutdonghd.addEventListener("click", function() {
-    	    var r =confirm("Bạn có chắc chắn muốn đóng hóa đơn này ?");
+    	    var r =confirm("Bạn có chắc chắn muốn ĐÓNG HÓA ĐƠN của "+childData.ten.toUpperCase()+" ?");
     	    if(r==true) {
     	    	update.child("laidadong").set(parseInt(tonglai));
     	    	update.child("hoanthanh").set(1); 
@@ -342,7 +342,7 @@ con=snapshot.numChildren();
     	    nutxoa.innerHTML="<i class=\"fa fa-times\" aria-hidden=\"true\"></i>";
     	    nutxoa.classList.add("do");
     	    nutxoa.addEventListener("click", function() {
-    	    var r =confirm("Bạn có chắc chắn muốn xóa khoản vay này ?");
+    	    var r =confirm("Bạn có chắc chắn muốn XÓA KHOẢN VAY của "+childData.ten.toUpperCase()+" ?");
     	    if(r==true) {firebase.child("vl").child(childSnapshot.key()).remove();
     	    Load();}
 			});
